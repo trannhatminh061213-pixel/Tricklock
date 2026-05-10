@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMLOCK VIP</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+
+    background:
+    radial-gradient(circle at top,#202020 0%,#0a0a0a 45%,#000 100%);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+    position:relative;
+}
+
+/* GRID */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+
+    background-size:40px 40px;
+
+    animation:gridMove 12s linear infinite;
+
+    opacity:.45;
+
+    pointer-events:none;
+}
+
+@keyframes gridMove{
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(40px);
+    }
+}
+
+/* STARS */
+.stars{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.star{
+    position:absolute;
+
+    width:1.5px;
+    height:35px;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(255,255,255,.95),
+        transparent
+    );
+
+    opacity:.7;
+
+    animation:meteor linear infinite;
+}
+
+@keyframes meteor{
+
+    from{
+        transform:
+        translateY(-120px)
+        translateX(0px)
+        rotate(30deg);
+
+        opacity:0;
+    }
+
+    15%{
+        opacity:1;
+    }
+
+    to{
+        transform:
+        translateY(110vh)
+        translateX(140px)
+        rotate(30deg);
+
+        opacity:0;
+    }
+}
+
+/* WRAPPER */
+.wrapper{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
+    z-index:2;
+}
+
+/* CARD */
+.card{
+
+    width:360px;
+    max-width:88%;
+
+    border-radius:26px;
+
+    padding:22px;
+
+    position:relative;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.09),
+        rgba(255,255,255,.03)
+    );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    overflow:hidden;
+
+    box-shadow:
+    0 0 0 1px rgba(255,255,255,.03),
+    0 20px 60px rgba(0,0,0,.82),
+    inset 0 0 25px rgba(255,255,255,.03);
+
+    animation:float 5s ease-in-out infinite;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    top:-90px;
+    right:-70px;
+
+    background:
+    radial-gradient(
+        rgba(255,255,255,.07),
+        transparent 70%
+    );
+
+    pointer-events:none;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-6px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* TITLE */
+.title{
+    text-align:center;
+
+    font-size:29px;
+    font-weight:bold;
+
+    letter-spacing:4px;
+
+    margin-bottom:20px;
+
+    color:#f4f4f4;
+
+    text-shadow:
+    0 0 18px rgba(255,255,255,.15);
+}
+
+/* LOADING */
+.bar{
+    width:100%;
+    height:12px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:#111;
+
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.fill{
+    width:0%;
+    height:100%;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #444,
+        #fff,
+        #555
+    );
+
+    transition:.08s linear;
+}
+
+.loadingText{
+    margin-top:18px;
+    text-align:center;
+    color:#d2d2d2;
+    letter-spacing:1px;
+    font-size:14px;
+}
+
+.percent{
+    margin-top:14px;
+    text-align:center;
+    font-size:20px;
+    letter-spacing:3px;
+}
+
+/* INPUT */
+.input,
+.select{
+
+    width:100%;
+    height:50px;
+
+    margin-top:12px;
+
+    border:none;
+    outline:none;
+
+    border-radius:15px;
+
+    padding:0 15px;
+
+    color:white;
+
+    font-size:14px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.015)
+    );
+
+    border:1px solid rgba(255,255,255,.06);
+
+    transition:.25s;
+}
+
+.input:focus,
+.select:focus{
+
+    border-color:rgba(255,255,255,.16);
+
+    box-shadow:
+    0 0 15px rgba(255,255,255,.08);
+}
+
+.input::placeholder{
+    color:#bcbcbc;
+}
+
+/* BUTTON */
+.btn{
+
+    width:100%;
+    height:50px;
+
+    margin-top:18px;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:14px;
+    letter-spacing:2px;
+
+    position:relative;
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        145deg,
+        #444,
+        #101010
+    );
+
+    transition:.25s;
+}
+
+.btn::before{
+    content:"";
+
+    position:absolute;
+    top:0;
+    left:-120%;
+
+    width:80%;
+    height:100%;
+
+    transform:skewX(-25deg);
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.18),
+        transparent
+    );
+
+    transition:.6s;
+}
+
+.btn:hover::before{
+    left:130%;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+/* TOGGLE */
+.toggle{
+
+    width:100%;
+    height:52px;
+
+    margin-top:12px;
+
+    border-radius:15px;
+
+    padding:0 15px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.05),
+        rgba(255,255,255,.015)
+    );
+
+    border:1px solid rgba(255,255,255,.05);
+
+    font-size:14px;
+}
+
+/* SWITCH */
+.switch{
+
+    width:52px;
+    height:29px;
+
+    border-radius:999px;
+
+    background:#252525;
+
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.switch::before{
+    content:"";
+
+    position:absolute;
+
+    width:21px;
+    height:21px;
+
+    border-radius:50%;
+
+    background:white;
+
+    top:4px;
+    left:4px;
+
+    transition:.3s;
+}
+
+.switch.active{
+    background:#777;
+}
+
+.switch.active::before{
+    left:27px;
+}
+
+/* DIVIDER */
+.divider{
+
+    width:100%;
+    height:1px;
+
+    margin-top:18px;
+    margin-bottom:4px;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.18),
+        transparent
+    );
+
+    border-radius:999px;
+}
+
+/* TABS */
+.tabs{
+    width:100%;
+    display:flex;
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.tabBtn{
+
+    flex:1;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:13px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.06),
+        rgba(255,255,255,.02)
+    );
+
+    border:1px solid rgba(255,255,255,.06);
+
+    transition:.25s;
+}
+
+.tabBtn.active{
+
+    background:
+    linear-gradient(
+        145deg,
+        #555,
+        #111
+    );
+
+    box-shadow:
+    0 0 15px rgba(255,255,255,.08);
+}
+
+.tab{
+    display:none;
+}
+
+.tab.active{
+    display:block;
+}
+
+/* NOTIFY */
+.notifyBox{
+    position:fixed;
+    top:16px;
+    right:16px;
+    z-index:9999;
+}
+
+.notify{
+
+    min-width:220px;
+
+    margin-top:10px;
+
+    padding:14px 16px;
+
+    border-radius:16px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.12),
+        rgba(255,255,255,.03)
+    );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(16px);
+
+    animation:notifyIn .35s ease;
+}
+
+.notifyTitle{
+    font-size:12px;
+    letter-spacing:2px;
+    margin-bottom:4px;
+    color:#fff;
+}
+
+.notifyText{
+    color:#d6d6d6;
+    font-size:13px;
+}
+
+@keyframes notifyIn{
+
+    from{
+        opacity:0;
+        transform:translateX(80px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+.notifyOut{
+    animation:notifyOut .35s ease forwards;
+}
+
+@keyframes notifyOut{
+
+    to{
+        opacity:0;
+        transform:translateX(80px);
+    }
+}
+
+/* PROCESS */
+.code{
+
+    margin-top:18px;
+
+    line-height:28px;
+
+    color:#d0d0d0;
+
+    height:145px;
+
+    overflow:auto;
+
+    font-size:13px;
+}
+
+.success{
+
+    margin-top:18px;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    line-height:28px;
+
+    font-size:13px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(255,255,255,.06),
+        rgba(255,255,255,.02)
+    );
+
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.hidden{
+    display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="notifyBox" id="notifyBox"></div>
+
+<div class="wrapper">
+
+<!-- LOADING -->
+<div class="card" id="loadingScreen">
+
+    <div class="title">
+        TRICKLOCK👑
+    </div>
+
+    <div class="bar">
+        <div class="fill" id="fill"></div>
+    </div>
+
+    <div class="loadingText">
+        Đang tải hồ sơ cho bạn...
+    </div>
+
+    <div class="percent" id="percent">
+        0%
+    </div>
+
+</div>
+
+<!-- MAIN -->
+<div class="card hidden" id="mainUI">
+
+    <div class="title">
+        TRICKLOCK
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+
+        <button
+        class="tabBtn active"
+        onclick="showTab('mainTab',this)">
+            FUNCTION 
+        </button>
+
+        <button
+        class="tabBtn"
+        onclick="showTab('checkTab',this)">
+            CHECK KEY
+        </button>
+
+    </div>
+
+    <!-- MAIN TAB -->
+    <div class="tab active" id="mainTab">
+
+        <div class="toggle">
+            <span>Nhẹ Tâm</span>
+            <div class="switch" onclick="toggleSwitch(this,'Nhẹ Tâm')"></div>
+        </div>
+
+        <div class="toggle">
+            <span>Fix Lố</span>
+            <div class="switch" onclick="toggleSwitch(this,'Fix Lố')"></div>
+        </div>
+
+        <div class="toggle">
+            <span>Fix Rung</span>
+            <div class="switch" onclick="toggleSwitch(this,'Fix Rung')"></div>
+        </div>
+
+        <div class="toggle">
+            <span>Bám Đầu</span>
+            <div class="switch" onclick="toggleSwitch(this,'Bám Đầu')"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <select class="select" id="gameType">
+            <option>FF Thường</option>
+            <option>FF Max</option>
+        </select>
+
+        <input
+        class="input"
+        id="keyInput"
+        placeholder="Nhập key">
+
+        <button class="btn" onclick="applySystem()">
+            ÁP DỤNG
+        </button>
+
+    </div>
+
+    <!-- CHECK TAB -->
+    <div class="tab" id="checkTab">
+
+        <input
+        class="input"
+        id="checkKeyInput"
+        placeholder="Nhập key để kiểm tra">
+
+        <button class="btn" onclick="checkKey()">
+            CHECK KEY
+        </button>
+
+        <div
+        class="success"
+        id="checkResult"
+        style="margin-top:16px;">
+
+            ...
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PROCESS -->
+<div class="card hidden" id="processing">
+
+    <div class="title">
+        APPLYING
+    </div>
+
+    <div class="code" id="codeBox">
+        Initializing secure core...
+    </div>
+
+    <div class="success hidden" id="successBox"></div>
+
+</div>
+
+</div>
+
+<script>
+
+/* STARS */
+const stars = document.getElementById("stars");
+
+for(let i=0;i<38;i++){
+
+    const star =
+    document.createElement("div");
+
+    star.className = "star";
+
+    star.style.left =
+    Math.random()*100 + "%";
+
+    star.style.top =
+    Math.random()*-100 + "vh";
+
+    star.style.animationDuration =
+    (2.5 + Math.random()*3) + "s";
+
+    star.style.animationDelay =
+    Math.random()*5 + "s";
+
+    stars.appendChild(star);
+}
+
+/* NOTIFY */
+function notify(text,type="SYSTEM"){
+
+    const box =
+    document.getElementById("notifyBox");
+
+    const div =
+    document.createElement("div");
+
+    div.className = "notify";
+
+    div.innerHTML = `
+
+    <div class="notifyTitle">
+        ${type}
+    </div>
+
+    <div class="notifyText">
+        ${text}
+    </div>
+
+    `;
+
+    box.appendChild(div);
+
+    setTimeout(()=>{
+
+        div.classList.add("notifyOut");
+
+        setTimeout(()=>{
+            div.remove();
+        },350);
+
+    },2500);
+}
+
+/* LOADING */
+let percent = 0;
+
+const fill =
+document.getElementById("fill");
+
+const percentText =
+document.getElementById("percent");
+
+const load = setInterval(()=>{
+
+    percent++;
+
+    fill.style.width =
+    percent + "%";
+
+    percentText.innerText =
+    percent + "%";
+
+    if(percent >= 100){
+
+        clearInterval(load);
+
+        setTimeout(()=>{
+
+            document
+            .getElementById("loadingScreen")
+            .classList.add("hidden");
+
+            document
+            .getElementById("mainUI")
+            .classList.remove("hidden");
+
+        },700);
+    }
+
+},45);
+
+/* VALID KEYS */
+const validKeys = [
+    "abc1",
+    "abc2",
+    "abc3",
+    "abc4",
+    "abc5"
+];
+
+/* TAB */
+function showTab(id,btn){
+
+    document
+    .querySelectorAll(".tab")
+    .forEach(tab=>{
+        tab.classList.remove("active");
+    });
+
+    document
+    .querySelectorAll(".tabBtn")
+    .forEach(b=>{
+        b.classList.remove("active");
+    });
+
+    document
+    .getElementById(id)
+    .classList.add("active");
+
+    btn.classList.add("active");
+}
+
+/* TOGGLE */
+function toggleSwitch(el,name){
+
+    el.classList.toggle("active");
+
+    const state =
+    el.classList.contains("active")
+    ? "đã bật"
+    : "đã tắt";
+
+    notify(
+        name + " " + state,
+        "ĐÃ BẬT"
+    );
+}
+
+/* APPLY */
+function applySystem(){
+
+    const type =
+    document
+    .getElementById("gameType")
+    .value;
+
+    const key =
+    document
+    .getElementById("keyInput")
+    .value
+    .trim();
+
+    if(key === ""){
+
+        notify(
+            "Vui lòng nhập key",
+            "ERROR"
+        );
+
+        return;
+    }
+
+    if(!validKeys.includes(key)){
+
+        notify(
+            "Key không hợp lệ",
+            "ERROR"
+        );
+
+        return;
+    }
+
+    const saved =
+    JSON.parse(
+        localStorage.getItem("usedKeys") || "{}"
+    );
+
+    const now =
+    Date.now();
+
+    if(saved[key]){
+
+        if(now > saved[key].expire){
+
+            notify(
+                "Key đã hết hạn",
+                "ERROR"
+            );
+
+            setTimeout(()=>{
+
+                alert(
+                    "Key đã hết hạn, vui lòng chờ key mới hoặc mua từ 𝙉𝙈𝙞𝙣𝙝 𝙎𝙚𝙣𝙨𝙞👑"
+                );
+
+            },300);
+
+            return;
+        }
+    }
+
+    if(!saved[key]){
+
+        saved[key] = {
+
+            type:type,
+
+            usedAt:now,
+
+            expire:now + (45 * 60 * 1000)
+
+        };
+
+        localStorage.setItem(
+            "usedKeys",
+            JSON.stringify(saved)
+        );
+    }
+
+    notify(
+        "Đang áp dụng cấu hình",
+        "SYSTEM"
+    );
+
+    document
+    .getElementById("mainUI")
+    .classList.add("hidden");
+
+    document
+    .getElementById("processing")
+    .classList.remove("hidden");
+
+    const codeBox =
+    document.getElementById("codeBox");
+
+    const successBox =
+    document.getElementById("successBox");
+
+    codeBox.innerHTML =
+    "Initializing secure core...";
+
+    const lines = [
+
+        "Injecting secure modules...",
+        "Connecting encrypted server...",
+        "Scanning key database...",
+        "Optimizing aim response...",
+        "Loading FF resources...",
+        "Applying sensitivity config...",
+        "Finalizing secure setup..."
+
+    ];
+
+    let i = 0;
+
+    const process = setInterval(()=>{
+
+        codeBox.innerHTML +=
+        "<br>" + lines[i];
+
+        codeBox.scrollTop =
+        codeBox.scrollHeight;
+
+        i++;
+
+        if(i >= lines.length){
+
+            clearInterval(process);
+
+            setTimeout(()=>{
+
+                const used =
+                new Date(
+                    saved[key].usedAt
+                );
+
+                const expire =
+                new Date(
+                    saved[key].expire
+                );
+
+                successBox.classList.remove("hidden");
+
+                successBox.innerHTML = `
+
+                <b>
+                ÁP DỤNG THÀNH CÔNG
+                </b>
+
+                <br><br>
+
+                Key:
+                ${key}
+
+                <br>
+
+                Loại:
+                ${type}
+
+                <br>
+
+                Kích hoạt:
+                ${used.toLocaleTimeString()}
+
+                <br>
+
+                Hết hạn:
+                ${expire.toLocaleTimeString()}
+
+                `;
+
+                notify(
+                    "Cấu hình đã kích hoạt",
+                    "SUCCESS"
+                );
+
+            },1000);
+
+        }
+
+    },650);
+}
+
+/* CHECK KEY */
+function checkKey(){
+
+    const key =
+    document
+    .getElementById("checkKeyInput")
+    .value
+    .trim();
+
+    const result =
+    document
+    .getElementById("checkResult");
+
+    const saved =
+    JSON.parse(
+        localStorage.getItem("usedKeys") || "{}"
+    );
+
+    if(key === ""){
+
+        result.innerHTML =
+        "Vui lòng nhập key";
+
+        return;
+    }
+
+    if(!validKeys.includes(key)){
+
+        result.innerHTML = `
+
+        <b>KEY KHÔNG HỢP LỆ</b>
+
+        <br><br>
+
+        Key này không tồn tại.
+
+        `;
+
+        return;
+    }
+
+    if(!saved[key]){
+
+        result.innerHTML = `
+
+        <b>KEY CHƯA KÍCH HOẠT</b>
+
+        <br><br>
+
+        Key chưa được sử dụng.
+
+        `;
+
+        return;
+    }
+
+    const now =
+    Date.now();
+
+    const data =
+    saved[key];
+
+    const expire =
+    new Date(data.expire);
+
+    if(now > data.expire){
+
+        result.innerHTML = `
+
+        <b>KEY ĐÃ HẾT HẠN</b>
+
+        <br><br>
+
+        Loại:
+        ${data.type}
+
+        <br>
+
+        Hết hạn:
+        ${expire.toLocaleTimeString()}
+
+        <br><br>
+
+        Vui lòng đổi key mới.
+
+        `;
+
+    }else{
+
+        const remain =
+        Math.floor(
+            (data.expire - now) / 60000
+        );
+
+        result.innerHTML = `
+
+        <b>KEY CÒN HẠN</b>
+
+        <br><br>
+
+        Loại:
+        ${data.type}
+
+        <br>
+
+        Hết hạn:
+        ${expire.toLocaleTimeString()}
+
+        <br>
+
+        Còn lại:
+        ${remain} phút
+
+        `;
+    }
+
+    notify(
+        "Đã kiểm tra key",
+        "CHECK"
+    );
+}
+
+</script>
+
+</body>
+</html>
