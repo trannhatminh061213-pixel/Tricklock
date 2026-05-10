@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIMLOCK VIP</title>
+<title>TRICKLOCK👑</title>
 
 <style>
 
@@ -50,6 +50,7 @@ body::before{
 }
 
 @keyframes gridMove{
+
     from{
         transform:translateY(0);
     }
@@ -207,6 +208,55 @@ body::before{
 
     text-shadow:
     0 0 18px rgba(255,255,255,.15);
+}
+
+/* INTRO */
+.introText{
+
+    width:100%;
+
+    text-align:center;
+
+    font-size:34px;
+
+    font-weight:bold;
+
+    letter-spacing:3px;
+
+    color:white;
+
+    animation:introAnim 2.5s ease forwards;
+
+    text-shadow:
+    0 0 20px rgba(255,255,255,.35),
+    0 0 45px rgba(255,255,255,.12);
+}
+
+@keyframes introAnim{
+
+    0%{
+        opacity:0;
+        transform:translateY(25px) scale(.9);
+        filter:blur(10px);
+    }
+
+    20%{
+        opacity:1;
+        transform:translateY(0px) scale(1);
+        filter:blur(0px);
+    }
+
+    70%{
+        opacity:1;
+        transform:translateY(0px) scale(1);
+        filter:blur(0px);
+    }
+
+    100%{
+        opacity:0;
+        transform:translateY(-35px) scale(1.08);
+        filter:blur(12px);
+    }
 }
 
 /* LOADING */
@@ -654,20 +704,28 @@ body::before{
 
 </div>
 
+<!-- INTRO -->
+<div class="card hidden" id="introScreen">
+
+    <div class="introText">
+        𝙉𝙈𝙞𝙣𝙝 𝙎𝙚𝙣𝙨𝙞👑
+    </div>
+
+</div>
+
 <!-- MAIN -->
 <div class="card hidden" id="mainUI">
 
     <div class="title">
-        TRICKLOCK
+        TRICKLOCK👑
     </div>
 
-    <!-- TABS -->
     <div class="tabs">
 
         <button
         class="tabBtn active"
         onclick="showTab('mainTab',this)">
-            FUNCTION 
+            CHỨC NĂNG
         </button>
 
         <button
@@ -763,6 +821,44 @@ body::before{
 
 <script>
 
+/* FORMAT DATE TIME */
+function formatDateTime(time){
+
+    const d = new Date(time);
+
+    const day =
+    String(d.getDate()).padStart(2,"0");
+
+    const month =
+    String(d.getMonth() + 1).padStart(2,"0");
+
+    const year =
+    d.getFullYear();
+
+    const hour =
+    String(d.getHours()).padStart(2,"0");
+
+    const minute =
+    String(d.getMinutes()).padStart(2,"0");
+
+    const second =
+    String(d.getSeconds()).padStart(2,"0");
+
+    return `
+    ${day}/${month}/${year}
+    -
+    ${hour}:${minute}:${second}
+    `;
+}
+
+/* AUTO RESET WHEN EXIT */
+window.addEventListener(
+    "beforeunload",
+    ()=>{
+        sessionStorage.clear();
+    }
+);
+
 /* STARS */
 const stars = document.getElementById("stars");
 
@@ -854,21 +950,42 @@ const load = setInterval(()=>{
             .classList.add("hidden");
 
             document
-            .getElementById("mainUI")
+            .getElementById("introScreen")
             .classList.remove("hidden");
 
-        },700);
+            setTimeout(()=>{
+
+                document
+                .getElementById("introScreen")
+                .classList.add("hidden");
+
+                document
+                .getElementById("mainUI")
+                .classList.remove("hidden");
+
+            },2400);
+
+        },500);
     }
 
 },45);
 
-/* VALID KEYS */
 const validKeys = [
-    "abc1",
-    "abc2",
-    "abc3",
-    "abc4",
-    "abc5"
+    "mghX-7Qkfo",
+    "Ciicj-9fij2X",
+    "CtbejR-8icowjlo",
+    "Vfwoel-sZiroN",
+    "SidEk-7kfkR",
+    "Rxfb7-Queua",
+    "DkdjO-9xrDk9",
+    "181Qsk-qo19k",
+    "Rj8fhr-188skl",
+    "293djop-kk9Akw",
+    "RO8dkf-do0L",
+    "EQ9kd-keoOi",
+    "8Krkf-KwOkd",
+    "9kOfk-9284",
+    "Kdidiq-8Lfqom"
 ];
 
 /* TAB */
@@ -905,7 +1022,7 @@ function toggleSwitch(el,name){
 
     notify(
         name + " " + state,
-        "ĐÃ BẬT"
+        "NOTIFY"
     );
 }
 
@@ -945,7 +1062,7 @@ function applySystem(){
 
     const saved =
     JSON.parse(
-        localStorage.getItem("usedKeys") || "{}"
+        sessionStorage.getItem("usedKeys") || "{}"
     );
 
     const now =
@@ -980,11 +1097,12 @@ function applySystem(){
 
             usedAt:now,
 
-            expire:now + (45 * 60 * 1000)
+            expire:
+            now + (7 * 24 * 60 * 60 * 1000)
 
         };
 
-        localStorage.setItem(
+        sessionStorage.setItem(
             "usedKeys",
             JSON.stringify(saved)
         );
@@ -1042,13 +1160,13 @@ function applySystem(){
 
             setTimeout(()=>{
 
-                const used =
-                new Date(
+                const usedText =
+                formatDateTime(
                     saved[key].usedAt
                 );
 
-                const expire =
-                new Date(
+                const expireText =
+                formatDateTime(
                     saved[key].expire
                 );
 
@@ -1056,29 +1174,38 @@ function applySystem(){
 
                 successBox.innerHTML = `
 
-                <b>
+                <b style="
+                font-size:16px;
+                letter-spacing:1px;
+                ">
                 ÁP DỤNG THÀNH CÔNG
                 </b>
 
                 <br><br>
 
-                Key:
+                <b>Key:</b>
                 ${key}
 
-                <br>
+                <br><br>
 
-                Loại:
+                <b>Loại:</b>
                 ${type}
 
+                <br><br>
+
+                <b>Kích hoạt:</b>
+
                 <br>
 
-                Kích hoạt:
-                ${used.toLocaleTimeString()}
+                ${usedText}
+
+                <br><br>
+
+                <b>Hết hạn:</b>
 
                 <br>
 
-                Hết hạn:
-                ${expire.toLocaleTimeString()}
+                ${expireText}
 
                 `;
 
@@ -1109,7 +1236,7 @@ function checkKey(){
 
     const saved =
     JSON.parse(
-        localStorage.getItem("usedKeys") || "{}"
+        sessionStorage.getItem("usedKeys") || "{}"
     );
 
     if(key === ""){
@@ -1157,7 +1284,10 @@ function checkKey(){
     saved[key];
 
     const expire =
-    new Date(data.expire);
+    formatDateTime(data.expire);
+
+    const used =
+    formatDateTime(data.usedAt);
 
     if(now > data.expire){
 
@@ -1170,10 +1300,15 @@ function checkKey(){
         Loại:
         ${data.type}
 
-        <br>
+        <br><br>
+
+        Kích hoạt:
+        ${used}
+
+        <br><br>
 
         Hết hạn:
-        ${expire.toLocaleTimeString()}
+        ${expire}
 
         <br><br>
 
@@ -1197,12 +1332,17 @@ function checkKey(){
         Loại:
         ${data.type}
 
-        <br>
+        <br><br>
+
+        Kích hoạt:
+        ${used}
+
+        <br><br>
 
         Hết hạn:
-        ${expire.toLocaleTimeString()}
+        ${expire}
 
-        <br>
+        <br><br>
 
         Còn lại:
         ${remain} phút
