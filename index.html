@@ -683,7 +683,6 @@ body::before{
 
 <div class="wrapper">
 
-<!-- LOADING -->
 <div class="card" id="loadingScreen">
 
     <div class="title">
@@ -704,7 +703,6 @@ body::before{
 
 </div>
 
-<!-- INTRO -->
 <div class="card hidden" id="introScreen">
 
     <div class="introText">
@@ -713,7 +711,6 @@ body::before{
 
 </div>
 
-<!-- MAIN -->
 <div class="card hidden" id="mainUI">
 
     <div class="title">
@@ -736,7 +733,6 @@ body::before{
 
     </div>
 
-    <!-- MAIN TAB -->
     <div class="tab active" id="mainTab">
 
         <div class="toggle">
@@ -777,7 +773,6 @@ body::before{
 
     </div>
 
-    <!-- CHECK TAB -->
     <div class="tab" id="checkTab">
 
         <input
@@ -802,7 +797,6 @@ body::before{
 
 </div>
 
-<!-- PROCESS -->
 <div class="card hidden" id="processing">
 
     <div class="title">
@@ -850,14 +844,6 @@ function formatDateTime(time){
     ${hour}:${minute}:${second}
     `;
 }
-
-/* AUTO RESET WHEN EXIT */
-window.addEventListener(
-    "beforeunload",
-    ()=>{
-        sessionStorage.clear();
-    }
-);
 
 /* STARS */
 const stars = document.getElementById("stars");
@@ -1062,7 +1048,7 @@ function applySystem(){
 
     const saved =
     JSON.parse(
-        sessionStorage.getItem("usedKeys") || "{}"
+        localStorage.getItem("usedKeys") || "{}"
     );
 
     const now =
@@ -1080,7 +1066,7 @@ function applySystem(){
             setTimeout(()=>{
 
                 alert(
-                    "Key đã hết hạn, vui lòng chờ key mới hoặc mua từ 𝙉𝙈𝙞𝙣𝙝 𝙎𝙚𝙣𝙨𝙞👑"
+                    "Key đã hết hạn sau 7 ngày sử dụng.\nVui lòng lấy key mới hoặc mua từ 𝙉𝙈𝙞𝙣𝙝 𝙎𝙚𝙣𝙨𝙞👑"
                 );
 
             },300);
@@ -1102,7 +1088,7 @@ function applySystem(){
 
         };
 
-        sessionStorage.setItem(
+        localStorage.setItem(
             "usedKeys",
             JSON.stringify(saved)
         );
@@ -1192,7 +1178,6 @@ function applySystem(){
                 ${type}
 
                 <br><br>
-
                 <b>Kích hoạt:</b>
 
                 <br>
@@ -1220,7 +1205,6 @@ function applySystem(){
 
     },650);
 }
-
 /* CHECK KEY */
 function checkKey(){
 
@@ -1236,7 +1220,7 @@ function checkKey(){
 
     const saved =
     JSON.parse(
-        sessionStorage.getItem("usedKeys") || "{}"
+        localStorage.getItem("usedKeys") || "{}"
     );
 
     if(key === ""){
@@ -1312,15 +1296,26 @@ function checkKey(){
 
         <br><br>
 
-        Vui lòng đổi key mới.
+        Key này đã hết hạn vĩnh viễn
+        sau 7 ngày sử dụng.
 
         `;
 
     }else{
 
-        const remain =
+        const remainDays =
         Math.floor(
-            (data.expire - now) / 60000
+            (data.expire - now)
+            / (1000 * 60 * 60 * 24)
+        );
+
+        const remainHours =
+        Math.floor(
+            (
+                (data.expire - now)
+                % (1000 * 60 * 60 * 24)
+            )
+            / (1000 * 60 * 60)
         );
 
         result.innerHTML = `
@@ -1345,7 +1340,8 @@ function checkKey(){
         <br><br>
 
         Còn lại:
-        ${remain} phút
+        ${remainDays} ngày
+        ${remainHours} giờ
 
         `;
     }
